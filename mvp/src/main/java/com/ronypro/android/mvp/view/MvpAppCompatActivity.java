@@ -1,6 +1,5 @@
 package com.ronypro.android.mvp.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
@@ -62,17 +61,6 @@ public abstract class MvpAppCompatActivity<T extends Presenter> extends AppCompa
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-    }
-
-    @CallSuper
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            presenter.onActivityResultOk(requestCode, data);
-        } else {
-            presenter.onActivityResultCancel(requestCode, data);
-        }
     }
 
     @CallSuper

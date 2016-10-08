@@ -2,6 +2,9 @@ package com.ronypro.android.popularmovies.model;
 
 import com.ronypro.android.mvp.model.Model;
 import com.ronypro.android.popularmovies.entity.Movie;
+import com.ronypro.android.popularmovies.entity.MovieListType;
+import com.ronypro.android.popularmovies.model.client.HttpCallException;
+import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 
 import java.util.List;
 
@@ -11,14 +14,6 @@ import java.util.List;
 
 public interface MovieModel extends Model {
 
-    void getMovieList(MovieListCallback callback);
-
-    interface MovieListCallback {
-
-        void onMovieListSuccess(List<Movie> movieList);
-
-        //TODO: Metodos de erro!!
-
-    }
+    List<Movie> getMovieList(@MovieListType String type) throws HttpCallException, NetworkCallException;
 
 }

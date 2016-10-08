@@ -14,4 +14,6 @@ public interface MovieListView extends View<MovieListPresenter> {
 
     void showMovieList(List<Movie> movieList);
 
+    void showToast(int message);
+
 }

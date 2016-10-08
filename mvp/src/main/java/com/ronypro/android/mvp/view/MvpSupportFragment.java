@@ -13,8 +13,6 @@ import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.Presenter;
 import com.ronypro.android.mvp.presenter.Presenters;
 
-import static android.app.Activity.RESULT_OK;
-
 public abstract class MvpSupportFragment<T extends Presenter> extends Fragment implements View<T> {
 
     private T presenter;
@@ -91,7 +89,6 @@ public abstract class MvpSupportFragment<T extends Presenter> extends Fragment i
         Mvp mvp = Mvp.getInstance();
         Presenters presenters = mvp.getPresenters();
         T presenter = presenters.get(presenterClass);
-        presenter.setLoaderManager(getLoaderManager());
         presenter.setContext(getContext());
         setPresenter(presenter);
         presenter.setView(this);
@@ -119,17 +116,6 @@ public abstract class MvpSupportFragment<T extends Presenter> extends Fragment i
         Activity activity = getActivity();
         if (activity != null)
             activity.setResult(result, data);
-    }
-
-    @CallSuper
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            presenter.onActivityResultOk(requestCode, data);
-        } else {
-            presenter.onActivityResultCancel(requestCode, data);
-        }
     }
 
     @CallSuper
