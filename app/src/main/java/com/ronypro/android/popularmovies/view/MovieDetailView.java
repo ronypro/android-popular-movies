@@ -10,6 +10,8 @@ import com.ronypro.android.popularmovies.presenter.MovieDetailPresenter;
 
 public interface MovieDetailView extends View<MovieDetailPresenter> {
 
+    String EXTRA_MOVIE = MovieDetailView.class.getName() + ".movie";
+
     void showMovie(Movie movie);
 
 }

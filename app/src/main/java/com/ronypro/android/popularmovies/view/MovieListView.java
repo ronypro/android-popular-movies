@@ -1,5 +1,7 @@
 package com.ronypro.android.popularmovies.view;
 
+import android.os.Bundle;
+
 import com.ronypro.android.mvp.view.View;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.presenter.MovieListPresenter;
@@ -16,4 +18,7 @@ public interface MovieListView extends View<MovieListPresenter> {
 
     void showToast(int message);
 
+    void startDetailView(Bundle extras);
+
+    void startSettingsView();
 }

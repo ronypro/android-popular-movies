@@ -1,16 +1,18 @@
 package com.ronypro.android.popularmovies.presenter;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.AbstractPresenter;
 import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.entity.Movie;
-import com.ronypro.android.popularmovies.entity.MovieListType;
+import com.ronypro.android.popularmovies.model.MovieModel;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 import com.ronypro.android.popularmovies.presenter.asynctask.MovieListAsyncTask;
+import com.ronypro.android.popularmovies.view.MovieDetailView;
 import com.ronypro.android.popularmovies.view.MovieListView;
 
 import java.util.List;
@@ -22,14 +24,16 @@ import static android.content.ContentValues.TAG;
  */
 public class MovieListPresenterImpl extends AbstractPresenter<MovieListView> implements MovieListPresenter, MovieListAsyncTask.Callback {
 
+    private MovieModel movieModel = Mvp.getModel(MovieModel.class);
+
     @Override
-    public void onCreate(@NonNull Bundle extras, Bundle savedInstanceState) {
-        super.onCreate(extras, savedInstanceState);
+    public void onStart() {
+        super.onStart();
         loadMovieList();
     }
 
     private void loadMovieList() {
-        MovieListAsyncTask.executeParallel(this, MovieListType.POPULAR);
+        MovieListAsyncTask.executeParallel(this);
     }
 
     @Override
@@ -50,8 +54,19 @@ public class MovieListPresenterImpl extends AbstractPresenter<MovieListView> imp
     }
 
     @Override
-    public void onMovieClick(Movie movie) {
-        //TODO:
+    public Uri getPosterUri(Movie movie) {
+        return movieModel.getPosterUri(movie);
     }
 
+    @Override
+    public void onMovieClick(Movie movie) {
+        Bundle extras = new Bundle();
+        extras.putParcelable(MovieDetailView.EXTRA_MOVIE, movie);
+        getView().startDetailView(extras);
+    }
+
+    @Override
+    public void onSettingsClick() {
+        getView().startSettingsView();
+    }
 }
