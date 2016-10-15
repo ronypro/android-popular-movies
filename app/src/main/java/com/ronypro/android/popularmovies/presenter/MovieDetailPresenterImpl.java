@@ -1,10 +1,13 @@
 package com.ronypro.android.popularmovies.presenter;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.AbstractPresenter;
 import com.ronypro.android.popularmovies.entity.Movie;
+import com.ronypro.android.popularmovies.model.MovieModel;
 import com.ronypro.android.popularmovies.view.MovieDetailView;
 
 /**
@@ -12,10 +15,14 @@ import com.ronypro.android.popularmovies.view.MovieDetailView;
  */
 public class MovieDetailPresenterImpl extends AbstractPresenter<MovieDetailView> implements MovieDetailPresenter {
 
+    private MovieModel movieModel = Mvp.getModel(MovieModel.class);
+
     @Override
     public void onCreate(@NonNull Bundle extras, Bundle savedInstanceState) {
         Movie movie = extras.getParcelable(MovieDetailView.EXTRA_MOVIE);
         getView().showMovie(movie);
+        Uri posterUri = movieModel.getPosterUri(movie);
+        getView().showPoster(posterUri);
     }
 
 }

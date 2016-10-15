@@ -3,15 +3,22 @@
 
     <string name="movie_list_load_http_error">Error when try load movie list</string>
     <string name="movie_list_load_network_error">Network error, check your connection and try again</string>
-    <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="title_activity_movie_detail">Movie detail</string>
     <string name="title_activity_settings">Settings</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="detail_movie_original_title">Original Title</string>
+    <string name="detail_movie_release_date">Release date</string>
+    <string name="detail_movie_synopsis">Synopsis</string>
+    <string name="detail_movie_poster">Poster</string>
 
     <!-- Strings related to Settings -->
     <string name="pref_movie_list_type_key">pref_movie_list_type</string>
     <string name="pref_movie_list_type_value">popular</string>
     <string name="pref_movie_list_type_message">Sort order</string>
+    <string name="detail_movie_release_date_undefined">Undefined</string>
+    <string name="detail_movie_synopsis_undefined">Undefined</string>
     <string-array name="pref_movie_list_type_titles">
         <item>Popular</item>
         <item>Top rated</item>

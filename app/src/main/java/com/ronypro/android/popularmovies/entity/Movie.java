@@ -26,7 +26,7 @@ public class Movie implements Parcelable {
     public String overview;
 
     @SerializedName("vote_average")
-    public String voteAverage;
+    public float voteAverage;
 
     @SerializedName("release_date")
     public Date releaseDate;
@@ -35,7 +35,7 @@ public class Movie implements Parcelable {
         posterPath = in.readString();
         originalTitle = in.readString();
         overview = in.readString();
-        voteAverage = in.readString();
+        voteAverage = in.readFloat();
         long releaseDateMs = in.readLong();
         if (releaseDateMs != Long.MIN_VALUE)
             releaseDate = new Date(releaseDateMs);
@@ -46,7 +46,7 @@ public class Movie implements Parcelable {
         parcel.writeString(posterPath);
         parcel.writeString(originalTitle);
         parcel.writeString(overview);
-        parcel.writeString(voteAverage);
+        parcel.writeFloat(voteAverage);
         long releaseDateMs = releaseDate != null? releaseDate.getTime() : Long.MIN_VALUE;
         parcel.writeLong(releaseDateMs);
     }

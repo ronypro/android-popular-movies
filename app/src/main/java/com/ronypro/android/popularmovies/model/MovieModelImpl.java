@@ -26,7 +26,8 @@ import retrofit2.Call;
 public class MovieModelImpl extends AbstractModel implements MovieModel {
 
     public static final String BASE_POSTER_URI = "http://image.tmdb.org/t/p/";
-    public static final String POSTER_SIZE = "w154";
+    public static final String POSTER_THUMBNAIL_SIZE = "w154";
+    public static final String POSTER_SIZE = "w780";
     private MovieDatabaseApi movieDatabaseApi;
 
     public MovieModelImpl() {
@@ -51,10 +52,19 @@ public class MovieModelImpl extends AbstractModel implements MovieModel {
     }
 
     @Override
+    public Uri getPosterThumbnailUri(Movie movie) {
+        return createPosterUri(movie, POSTER_THUMBNAIL_SIZE);
+    }
+
+    @Override
     public Uri getPosterUri(Movie movie) {
+        return createPosterUri(movie, POSTER_SIZE);
+    }
+
+    private Uri createPosterUri(Movie movie, String size) {
         return Uri.parse(BASE_POSTER_URI)
                 .buildUpon()
-                .appendPath(POSTER_SIZE)
+                .appendPath(size)
                 .appendEncodedPath(movie.posterPath)
                 .build();
     }

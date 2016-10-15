@@ -17,6 +17,8 @@ public interface MovieModel extends Model {
 
     List<Movie> getMovieList() throws HttpCallException, NetworkCallException;
 
+    Uri getPosterThumbnailUri(Movie movie);
+
     Uri getPosterUri(Movie movie);
 
 }

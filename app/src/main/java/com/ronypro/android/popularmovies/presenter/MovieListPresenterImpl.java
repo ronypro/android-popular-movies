@@ -55,7 +55,7 @@ public class MovieListPresenterImpl extends AbstractPresenter<MovieListView> imp
 
     @Override
     public Uri getPosterUri(Movie movie) {
-        return movieModel.getPosterUri(movie);
+        return movieModel.getPosterThumbnailUri(movie);
     }
 
     @Override
