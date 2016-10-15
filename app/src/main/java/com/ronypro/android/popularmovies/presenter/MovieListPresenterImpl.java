@@ -7,13 +7,13 @@ import android.util.Log;
 import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.AbstractPresenter;
 import com.ronypro.android.popularmovies.R;
+import com.ronypro.android.popularmovies.contract.MovieDetailContract;
+import com.ronypro.android.popularmovies.contract.MovieListContract;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.model.MovieModel;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 import com.ronypro.android.popularmovies.presenter.asynctask.MovieListAsyncTask;
-import com.ronypro.android.popularmovies.view.MovieDetailView;
-import com.ronypro.android.popularmovies.view.MovieListView;
 
 import java.util.List;
 
@@ -22,7 +22,9 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by rahony on 07/10/16.
  */
-public class MovieListPresenterImpl extends AbstractPresenter<MovieListView> implements MovieListPresenter, MovieListAsyncTask.Callback {
+public class MovieListPresenterImpl
+        extends AbstractPresenter<MovieListContract.MovieListView>
+        implements MovieListContract.MovieListPresenter, MovieListAsyncTask.Callback {
 
     private MovieModel movieModel = Mvp.getModel(MovieModel.class);
 
@@ -61,7 +63,7 @@ public class MovieListPresenterImpl extends AbstractPresenter<MovieListView> imp
     @Override
     public void onMovieClick(Movie movie) {
         Bundle extras = new Bundle();
-        extras.putParcelable(MovieDetailView.EXTRA_MOVIE, movie);
+        extras.putParcelable(MovieDetailContract.MovieDetailView.EXTRA_MOVIE, movie);
         getView().startDetailView(extras);
     }
 

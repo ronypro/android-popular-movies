@@ -10,14 +10,15 @@ import android.widget.Toast;
 
 import com.ronypro.android.mvp.view.MvpAppCompatActivity;
 import com.ronypro.android.popularmovies.R;
+import com.ronypro.android.popularmovies.contract.MovieListContract;
 import com.ronypro.android.popularmovies.entity.Movie;
-import com.ronypro.android.popularmovies.presenter.MovieListPresenter;
-import com.ronypro.android.popularmovies.view.MovieListView;
 import com.ronypro.android.popularmovies.view.adapter.MovieListAdapter;
 
 import java.util.List;
 
-public class MovieListActivity extends MvpAppCompatActivity<MovieListPresenter> implements MovieListView, MovieListAdapter.Holder {
+public class MovieListActivity
+        extends MvpAppCompatActivity<MovieListContract.MovieListPresenter>
+        implements MovieListContract.MovieListView, MovieListAdapter.Holder {
 
     private MovieListAdapter movieListAdapter;
 
@@ -51,8 +52,8 @@ public class MovieListActivity extends MvpAppCompatActivity<MovieListPresenter> 
     }
 
     @Override
-    protected Class<MovieListPresenter> getPresenterClass() {
-        return MovieListPresenter.class;
+    protected Class<MovieListContract.MovieListPresenter> getPresenterClass() {
+        return MovieListContract.MovieListPresenter.class;
     }
 
     @Override

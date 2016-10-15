@@ -8,15 +8,18 @@ import android.widget.TextView;
 
 import com.ronypro.android.mvp.view.MvpAppCompatActivity;
 import com.ronypro.android.popularmovies.R;
+import com.ronypro.android.popularmovies.contract.MovieDetailContract;
 import com.ronypro.android.popularmovies.entity.Movie;
-import com.ronypro.android.popularmovies.presenter.MovieDetailPresenter;
-import com.ronypro.android.popularmovies.view.MovieDetailView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 
+;
 
-public class MovieDetailActivity extends MvpAppCompatActivity<MovieDetailPresenter> implements MovieDetailView {
+
+public class MovieDetailActivity
+        extends MvpAppCompatActivity<MovieDetailContract.MovieDetailPresenter>
+        implements MovieDetailContract.MovieDetailView {
 
     private TextView originalTitleTextView;
     private RatingBar voteAverageRatingBar;
@@ -43,8 +46,8 @@ public class MovieDetailActivity extends MvpAppCompatActivity<MovieDetailPresent
     }
 
     @Override
-    protected Class<MovieDetailPresenter> getPresenterClass() {
-        return MovieDetailPresenter.class;
+    protected Class<MovieDetailContract.MovieDetailPresenter> getPresenterClass() {
+        return MovieDetailContract.MovieDetailPresenter.class;
     }
 
     @Override
