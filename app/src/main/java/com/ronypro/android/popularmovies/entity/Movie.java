@@ -16,6 +16,8 @@ public class Movie implements Parcelable {
     public Movie() {
     }
 
+    public long id;
+
     @SerializedName("poster_path")
     public String posterPath;
 
@@ -32,6 +34,7 @@ public class Movie implements Parcelable {
     public Date releaseDate;
 
     public Movie(Parcel in) {
+        id = in.readLong();
         posterPath = in.readString();
         originalTitle = in.readString();
         overview = in.readString();
@@ -43,6 +46,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeLong(id);
         parcel.writeString(posterPath);
         parcel.writeString(originalTitle);
         parcel.writeString(overview);

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Popular Movies</string>
 
+    <string name="content_authority">com.ronypro.android.popularmovies</string>
+
     <string name="movie_list_load_http_error">Error when try load movie list</string>
     <string name="movie_list_load_network_error">Network error, check your connection and try again</string>
     <string name="title_activity_movie_detail">Movie detail</string>

@@ -39,8 +39,10 @@ dependencies {
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
 
-    //MVP
+    //Libraries
     compile project(':mvp')
+    compile project(':database')
+    compile project(':provider')
 
     //Teste
     testCompile 'junit:junit:4.12'
