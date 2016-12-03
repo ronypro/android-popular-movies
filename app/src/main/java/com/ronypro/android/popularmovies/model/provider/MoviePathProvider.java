@@ -3,7 +3,7 @@ package com.ronypro.android.popularmovies.model.provider;
 import android.net.Uri;
 import android.util.Pair;
 
-import com.ronypro.android.popularmovies.model.database.MoviesContract;
+import com.ronypro.android.popularmovies.contract.database.MoviesContract;
 import com.ronypro.android.provider.TablePathProvider;
 
 /**

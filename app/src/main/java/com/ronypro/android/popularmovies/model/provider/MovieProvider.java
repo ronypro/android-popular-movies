@@ -4,7 +4,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.ronypro.android.database.DatabaseHelper;
 import com.ronypro.android.popularmovies.model.database.MovieDatabase;
-import com.ronypro.android.popularmovies.model.database.MoviesContract;
+import com.ronypro.android.popularmovies.contract.database.MoviesContract;
 import com.ronypro.android.provider.CentralProvider;
 
 /**
@@ -25,6 +25,8 @@ public class MovieProvider extends CentralProvider {
     @Override
     protected void registerPaths() {
         registerPath(new MoviePathProvider());
+        registerPath(new ReviewPathProvider());
+        registerPath(new VideoPathProvider());
     }
 
 }

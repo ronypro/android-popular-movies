@@ -23,8 +23,18 @@ public class CommandRegister {
         return this;
     }
 
+    public CommandRegister registerUpdateItem(UpdateItemCommand updateItemCommand) {
+        provider.registerUpdateItem(pathIndex, updateItemCommand);
+        return this;
+    }
+
     public CommandRegister registerDelete(DeleteCommand deleteCommand) {
         provider.registerDelete(pathIndex, deleteCommand);
+        return this;
+    }
+
+    public CommandRegister registerDeleteItem(DeleteItemCommand deleteItemCommand) {
+        provider.registerDeleteItem(pathIndex, deleteItemCommand);
         return this;
     }
 

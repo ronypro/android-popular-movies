@@ -12,7 +12,9 @@ import android.util.Pair;
 /**
  * Created by Rahony on 16/08/2016.
  */
-public abstract class TablePathProvider implements PathProvider, InsertUriCommand, UpdateCommand, DeleteCommand, QueryAllCommand, QueryItemCommand {
+public abstract class TablePathProvider implements PathProvider, InsertUriCommand, UpdateCommand, DeleteCommand, QueryAllCommand, QueryItemCommand, UpdateItemCommand, DeleteItemCommand {
+
+    private static final int DEFAULT_ID_POSITION_IN_ITEM_URI = 1;
 
     @CallSuper
     @Override
@@ -33,6 +35,8 @@ public abstract class TablePathProvider implements PathProvider, InsertUriComman
                 .registerQueryAll(this);
 
         provider.registerPath(itemPath, itemPathType)
+                .registerUpdateItem(this)
+                .registerDeleteItem(this)
                 .registerQueryItem(this);
     }
 
@@ -47,8 +51,27 @@ public abstract class TablePathProvider implements PathProvider, InsertUriComman
     }
 
     @Override
+    public int updateItem(SQLiteDatabase database, Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        return database.update(
+                getTableName(),
+                values,
+                getIdColumnName() + " = ?",
+                new String[]{getIdFromUri(uri)}
+        );
+    }
+
+    @Override
     public int delete(SQLiteDatabase database, Uri uri, String selection, String[] selectionArgs) {
         return database.delete(getTableName(), selection, selectionArgs);
+    }
+
+    @Override
+    public int deleteItem(SQLiteDatabase database, Uri uri, String selection, String[] selectionArgs) {
+        return database.delete(
+                getTableName(),
+                getIdColumnName() + " = ?",
+                new String[]{getIdFromUri(uri)}
+        );
     }
 
     @NonNull
@@ -90,7 +113,11 @@ public abstract class TablePathProvider implements PathProvider, InsertUriComman
     }
 
     protected String getIdFromUri(Uri uri) {
-        return uri.getPathSegments().get(1);
+        return getIdFromUri(uri, DEFAULT_ID_POSITION_IN_ITEM_URI);
+    }
+
+    protected String getIdFromUri(Uri uri, int position) {
+        return uri.getPathSegments().get(position);
     }
 
 }

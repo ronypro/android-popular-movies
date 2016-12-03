@@ -19,8 +19,6 @@ public interface MovieListContract {
 
         void showMovieList(List<Movie> movieList);
 
-        void showToast(int message);
-
         void startDetailView(Bundle extras);
 
         void startSettingsView();

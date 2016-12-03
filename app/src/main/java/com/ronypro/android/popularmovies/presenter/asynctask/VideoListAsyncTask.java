@@ -4,7 +4,8 @@ import android.os.AsyncTask;
 import android.support.v4.os.AsyncTaskCompat;
 
 import com.ronypro.android.popularmovies.entity.Movie;
-import com.ronypro.android.popularmovies.contract.model.MovieModel;
+import com.ronypro.android.popularmovies.entity.Video;
+import com.ronypro.android.popularmovies.contract.model.VideoModel;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 
@@ -16,19 +17,20 @@ import static com.ronypro.android.mvp.Mvp.getModel;
  * Created by rahony on 08/10/16.
  */
 
-public class MovieListAsyncTask extends AsyncTask<Void, Void, MovieListAsyncTask.Result> {
+public class VideoListAsyncTask extends AsyncTask<Movie, Void, VideoListAsyncTask.Result> {
 
     private Callback callback;
 
-    MovieListAsyncTask(Callback callback) {
+    VideoListAsyncTask(Callback callback) {
         this.callback = callback;
     }
 
     @Override
-    protected Result doInBackground(Void... voids) {
+    protected Result doInBackground(Movie... movies) {
+        Movie movie = movies[0];
         Result result = new Result();
         try {
-            result.movieList = getModel(MovieModel.class).getMovieList();
+            result.videoList = getModel(VideoModel.class).getVideoList(movie);
         } catch (HttpCallException e) {
             result.httpCallException = e;
         } catch (NetworkCallException e) {
@@ -39,23 +41,23 @@ public class MovieListAsyncTask extends AsyncTask<Void, Void, MovieListAsyncTask
 
     @Override
     protected void onPostExecute(Result result) {
-        if (result.movieList != null) {
-            callback.onMovieListResult(result.movieList);
+        if (result.videoList != null) {
+            callback.onVideoListResult(result.videoList);
         } else if (result.httpCallException != null) {
-            callback.onMovieListHttpCallException(result.httpCallException);
+            callback.onVideoListHttpCallException(result.httpCallException);
         } else if (result.networkCallException != null) {
-            callback.onMovieListNetworkCallException(result.networkCallException);
+            callback.onVideoListNetworkCallException(result.networkCallException);
         }
     }
 
-    public static void executeParallel(Callback callback) {
-        MovieListAsyncTask movieListAsyncTask = new MovieListAsyncTask(callback);
-        AsyncTaskCompat.executeParallel(movieListAsyncTask);
+    public static void executeParallel(Movie movie, Callback callback) {
+        VideoListAsyncTask movieListAsyncTask = new VideoListAsyncTask(callback);
+        AsyncTaskCompat.executeParallel(movieListAsyncTask, movie);
     }
 
     static class Result {
 
-        List<Movie> movieList;
+        List<Video> videoList;
 
         HttpCallException httpCallException;
 
@@ -65,10 +67,10 @@ public class MovieListAsyncTask extends AsyncTask<Void, Void, MovieListAsyncTask
 
     public interface Callback {
 
-        void onMovieListResult(List<Movie> movieList);
+        void onVideoListResult(List<Video> videoList);
 
-        void onMovieListHttpCallException(HttpCallException httpCallException);
+        void onVideoListHttpCallException(HttpCallException httpCallException);
 
-        void onMovieListNetworkCallException(NetworkCallException networkCallException);
+        void onVideoListNetworkCallException(NetworkCallException networkCallException);
     }
 }

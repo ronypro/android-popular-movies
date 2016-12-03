@@ -1,5 +1,8 @@
 package com.ronypro.android.popularmovies.model.client;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -23,9 +26,14 @@ public class MovieDatabaseApiUtil {
     }
 
     private static MovieDatabaseApi createApi() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+        Gson gson = builder.create();
+        GsonConverterFactory converterFactory = GsonConverterFactory.create(gson);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(converterFactory)
                 .build();
 
         return retrofit.create(MovieDatabaseApi.class);

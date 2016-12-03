@@ -1,4 +1,4 @@
-package com.ronypro.android.popularmovies.model;
+package com.ronypro.android.popularmovies.contract.model;
 
 import android.net.Uri;
 
@@ -20,5 +20,9 @@ public interface MovieModel extends Model {
     Uri getPosterThumbnailUri(Movie movie);
 
     Uri getPosterUri(Movie movie);
+
+    void save(Movie movie);
+
+    void delete(Movie movie);
 
 }

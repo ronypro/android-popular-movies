@@ -3,6 +3,7 @@ package com.ronypro.android.mvp.view;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.Presenter;
@@ -102,6 +103,11 @@ public abstract class MvpAppCompatActivity<T extends Presenter> extends AppCompa
     @Override
     public T getPresenter() {
         return presenter;
+    }
+
+    @Override
+    public void showToast(int message) {
+        Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     protected abstract Class<T> getPresenterClass();

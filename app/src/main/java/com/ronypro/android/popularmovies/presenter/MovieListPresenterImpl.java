@@ -2,6 +2,7 @@ package com.ronypro.android.popularmovies.presenter;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.ronypro.android.mvp.Mvp;
@@ -10,12 +11,14 @@ import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.contract.MovieDetailContract;
 import com.ronypro.android.popularmovies.contract.MovieListContract;
 import com.ronypro.android.popularmovies.entity.Movie;
-import com.ronypro.android.popularmovies.model.MovieModel;
+import com.ronypro.android.popularmovies.contract.model.MovieModel;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 import com.ronypro.android.popularmovies.presenter.asynctask.MovieListAsyncTask;
 
 import java.util.List;
+
+import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
 import static android.content.ContentValues.TAG;
 
@@ -27,6 +30,18 @@ public class MovieListPresenterImpl
         implements MovieListContract.MovieListPresenter, MovieListAsyncTask.Callback {
 
     private MovieModel movieModel = Mvp.getModel(MovieModel.class);
+
+    @Override
+    public void onCreate(@NonNull Bundle extras, Bundle savedInstanceState) {
+        super.onCreate(extras, savedInstanceState);
+        SQLiteStudioService.instance().start(getContext());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SQLiteStudioService.instance().stop();
+    }
 
     @Override
     public void onStart() {
@@ -52,7 +67,7 @@ public class MovieListPresenterImpl
     @Override
     public void onMovieListNetworkCallException(NetworkCallException networkCallException) {
         Log.e(TAG, "Network error in request movie list", networkCallException);
-        getView().showToast(R.string.movie_list_load_network_error);
+        getView().showToast(R.string.network_error);
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.ronypro.android.mvp.view.MvpAppCompatActivity;
 import com.ronypro.android.popularmovies.R;
@@ -59,11 +58,6 @@ public class MovieListActivity
     @Override
     public void showMovieList(List<Movie> movieList) {
         movieListAdapter.setMovies(movieList);
-    }
-
-    @Override
-    public void showToast(int message) {
-        Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

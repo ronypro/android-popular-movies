@@ -5,6 +5,10 @@ import android.net.Uri;
 import com.ronypro.android.mvp.presenter.Presenter;
 import com.ronypro.android.mvp.view.View;
 import com.ronypro.android.popularmovies.entity.Movie;
+import com.ronypro.android.popularmovies.entity.Review;
+import com.ronypro.android.popularmovies.entity.Video;
+
+import java.util.List;
 
 /**
  * Created by rahony on 07/10/16.
@@ -20,9 +24,16 @@ public interface MovieDetailContract {
 
         void showPoster(Uri posterUri);
 
+        void showVideoList(List<Video> videoList);
+
+        void showReviewList(List<Review> reviewList);
     }
 
     interface MovieDetailPresenter extends Presenter<MovieDetailView> {
+
+        void onFavoriteMovieClick();
+
+        void onUnfavoriteMovieClick();
     }
 
 

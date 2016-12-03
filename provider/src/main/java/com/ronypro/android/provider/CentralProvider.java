@@ -69,9 +69,19 @@ public abstract class CentralProvider extends ContentProvider {
 		pathConfig.updateCommand = updateCommand;
 	}
 
+	void registerUpdateItem(int pathIndex, UpdateItemCommand updateItemCommand) {
+		PathConfig pathConfig = getPathConfig(pathIndex);
+		pathConfig.updateCommand = new UpdateItemCommandDelegate(updateItemCommand);
+	}
+
 	void registerDelete(int pathIndex, DeleteCommand deleteCommand) {
 		PathConfig pathConfig = getPathConfig(pathIndex);
 		pathConfig.deleteCommand = deleteCommand;
+	}
+
+	void registerDeleteItem(int pathIndex, DeleteItemCommand deleteItemCommand) {
+		PathConfig pathConfig = getPathConfig(pathIndex);
+		pathConfig.deleteCommand = new DeleteItemCommandDelegate(deleteItemCommand);
 	}
 
 	void registerQuery(int pathIndex, QueryCommand queryCommand) {
@@ -228,6 +238,34 @@ public abstract class CentralProvider extends ContentProvider {
 		@Override
 		public Cursor query(SQLiteDatabase database, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 			return queryItemCommand.queryItem(database, uri, projection, selection, selectionArgs, sortOrder);
+		}
+	}
+
+	private static class UpdateItemCommandDelegate implements UpdateCommand {
+
+		private UpdateItemCommand updateItemCommand;
+
+		public UpdateItemCommandDelegate(UpdateItemCommand updateItemCommand) {
+			this.updateItemCommand = updateItemCommand;
+		}
+
+		@Override
+		public int update(SQLiteDatabase database, Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+			return updateItemCommand.updateItem(database, uri, values, selection, selectionArgs);
+		}
+	}
+
+	private static class DeleteItemCommandDelegate implements DeleteCommand {
+
+		private DeleteItemCommand deleteItemCommand;
+
+		public DeleteItemCommandDelegate(DeleteItemCommand deleteItemCommand) {
+			this.deleteItemCommand = deleteItemCommand;
+		}
+
+		@Override
+		public int delete(SQLiteDatabase database, Uri uri, String selection, String[] selectionArgs) {
+			return deleteItemCommand.deleteItem(database, uri, selection, selectionArgs);
 		}
 	}
 

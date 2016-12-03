@@ -2,6 +2,7 @@ package com.ronypro.android.popularmovies.model.database;
 
 import com.ronypro.android.database.helper.ContentValuesHelper;
 import com.ronypro.android.database.helper.EntityContentValuesHelper;
+import com.ronypro.android.popularmovies.contract.database.MoviesContract;
 import com.ronypro.android.popularmovies.entity.Movie;
 
 /**

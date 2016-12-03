@@ -16,4 +16,6 @@ public interface View<T extends Presenter> {
     T getPresenter();
 
     void setResult(int result, Intent data);
+
+    void showToast(int message);
 }

@@ -1,5 +1,6 @@
 package com.ronypro.android.mvp.model;
 
+import android.content.ContentResolver;
 import android.content.Context;
 
 /**
@@ -17,6 +18,10 @@ public abstract class AbstractModel implements Model {
 
     protected Context getApplicationContext() {
         return applicationContext;
+    }
+
+    protected ContentResolver getContentResolver() {
+        return getApplicationContext().getContentResolver();
     }
 
 }

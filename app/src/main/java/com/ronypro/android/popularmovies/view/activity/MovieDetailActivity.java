@@ -2,24 +2,27 @@ package com.ronypro.android.popularmovies.view.activity;
 
 import android.net.Uri;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ronypro.android.mvp.view.MvpAppCompatActivity;
 import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.contract.MovieDetailContract;
 import com.ronypro.android.popularmovies.entity.Movie;
+import com.ronypro.android.popularmovies.entity.Review;
+import com.ronypro.android.popularmovies.entity.Video;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
-
-;
+import java.util.List;
 
 
 public class MovieDetailActivity
         extends MvpAppCompatActivity<MovieDetailContract.MovieDetailPresenter>
-        implements MovieDetailContract.MovieDetailView {
+        implements MovieDetailContract.MovieDetailView, View.OnClickListener {
 
     private TextView originalTitleTextView;
     private RatingBar voteAverageRatingBar;
@@ -43,6 +46,10 @@ public class MovieDetailActivity
         releaseDateTextView = (TextView) findViewById(R.id.detail_movie_release_date_textview);
         synopsisTextView = (TextView) findViewById(R.id.detail_movie_synopsis_textview);
         posterImageView = (ImageView) findViewById(R.id.detail_movie_poster_imageview);
+
+        //TODO:
+        findViewById(R.id.detail_movie_favorite_button).setOnClickListener(this);
+        findViewById(R.id.detail_movie_unfavorite_button).setOnClickListener(this);
     }
 
     @Override
@@ -73,5 +80,25 @@ public class MovieDetailActivity
         Picasso.with(getBaseContext())
                 .load(posterUri)
                 .into(posterImageView);
+    }
+
+    @Override
+    public void showVideoList(List<Video> videoList) {
+        Toast.makeText(getBaseContext(), "VIDEO LIST SHOWED", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showReviewList(List<Review> reviewList) {
+        Toast.makeText(getBaseContext(), "REVIEW LIST SHOWED", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.detail_movie_favorite_button) {
+            getPresenter().onFavoriteMovieClick();
+        } else if (id == R.id.detail_movie_unfavorite_button) {
+            getPresenter().onUnfavoriteMovieClick();
+        }
     }
 }
