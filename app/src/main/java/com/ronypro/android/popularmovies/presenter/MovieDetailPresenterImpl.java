@@ -92,6 +92,7 @@ public class MovieDetailPresenterImpl
 
     private void showVideoList(List<Video> videoList) {
         getView().showVideoList(videoList);
+        showFavoriteAction();
     }
 
     @Override
@@ -114,6 +115,7 @@ public class MovieDetailPresenterImpl
 
     private void showReviewList(List<Review> reviewList) {
         getView().showReviewList(reviewList);
+        showFavoriteAction();
     }
 
     @Override
@@ -130,14 +132,25 @@ public class MovieDetailPresenterImpl
 
     @Override
     public void onFavoriteMovieClick() {
-        //TODO: async?
-        movieModel.save(movie);
+        if (movie.favorite) {
+            unfavoriteMoview(movie);
+        } else {
+            favoriteMoview(movie);
+        }
     }
 
-    @Override
-    public void onUnfavoriteMovieClick() {
+    private void favoriteMoview(Movie movie) {
+        movie.favorite = true;
+        //TODO: async?
+        movieModel.save(movie);
+        getView().setMovieFavorite(movie.favorite);
+    }
+
+    private void unfavoriteMoview(Movie movie) {
+        movie.favorite = false;
         //TODO: async?
         movieModel.delete(movie);
+        getView().setMovieFavorite(movie.favorite);
     }
 
     @Override
@@ -153,6 +166,12 @@ public class MovieDetailPresenterImpl
     @Override
     public Uri getThumbnailUri(Video video) {
         return videoModel.getThumbnailUri(video);
+    }
+
+    private void showFavoriteAction() {
+        if (movie.reviewList != null && movie.videoList != null) {
+            getView().showFavoriteAction();
+        }
     }
 
 }

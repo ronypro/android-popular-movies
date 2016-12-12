@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -35,9 +36,7 @@ public class MovieDetailActivity
     private ImageView posterImageView;
     private VideoListAdapter videoListAdapter;
     private ReviewListAdapter reviewListAdapter;
-
-    private RecyclerView videosRecyclerView;
-    private RecyclerView reviewsRecyclerView;
+    private ImageButton favoriteImageButton;
 
     @Override
     protected int getLayoutToInflate() {
@@ -55,8 +54,9 @@ public class MovieDetailActivity
         releaseDateTextView = (TextView) findViewById(R.id.detail_movie_release_date_textview);
         synopsisTextView = (TextView) findViewById(R.id.detail_movie_synopsis_textview);
         posterImageView = (ImageView) findViewById(R.id.detail_movie_poster_imageview);
-        videosRecyclerView = (RecyclerView) findViewById(R.id.detail_movie_videos_list_recycler_view);
-        reviewsRecyclerView = (RecyclerView) findViewById(R.id.detail_movie_reviews_list_recycler_view);
+        RecyclerView videosRecyclerView = (RecyclerView) findViewById(R.id.detail_movie_videos_list_recycler_view);
+        RecyclerView reviewsRecyclerView = (RecyclerView) findViewById(R.id.detail_movie_reviews_list_recycler_view);
+        favoriteImageButton = (ImageButton) findViewById(R.id.detail_movie_favorite_image_button);
 
         videoListAdapter = new VideoListAdapter(this);
         videosRecyclerView.setAdapter(videoListAdapter);
@@ -64,9 +64,7 @@ public class MovieDetailActivity
         reviewListAdapter = new ReviewListAdapter();
         reviewsRecyclerView.setAdapter(reviewListAdapter);
 
-        //TODO:
-        findViewById(R.id.detail_movie_favorite_button).setOnClickListener(this);
-        findViewById(R.id.detail_movie_unfavorite_button).setOnClickListener(this);
+        favoriteImageButton.setOnClickListener(this);
     }
 
     @Override
@@ -90,6 +88,7 @@ public class MovieDetailActivity
         } else {
             synopsisTextView.setText(R.string.detail_movie_synopsis_undefined);
         }
+        setMovieFavorite(movie.favorite);
     }
 
     @Override
@@ -97,6 +96,16 @@ public class MovieDetailActivity
         Picasso.with(getBaseContext())
                 .load(posterUri)
                 .into(posterImageView);
+    }
+
+    @Override
+    public void setMovieFavorite(boolean favorite) {
+        favoriteImageButton.setSelected(favorite);
+    }
+
+    @Override
+    public void showFavoriteAction() {
+        favoriteImageButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -118,10 +127,8 @@ public class MovieDetailActivity
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.detail_movie_favorite_button) {
+        if (id == R.id.detail_movie_favorite_image_button) {
             getPresenter().onFavoriteMovieClick();
-        } else if (id == R.id.detail_movie_unfavorite_button) {
-            getPresenter().onUnfavoriteMovieClick();
         }
     }
 

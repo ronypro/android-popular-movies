@@ -17,7 +17,8 @@
             android:name=".model.provider.MovieProvider"
             android:exported="false" />
 
-        <activity android:name=".view.activity.MovieListActivity">
+        <activity android:name=".view.activity.MovieListActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

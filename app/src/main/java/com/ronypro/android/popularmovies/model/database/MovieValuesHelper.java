@@ -21,6 +21,7 @@ public class MovieValuesHelper extends EntityContentValuesHelper<Movie> {
         values.put(MoviesContract.MovieEntry.COLUMN_OVERVIEW, movie.overview);
         values.put(MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE, movie.voteAverage);
         values.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, movie.releaseDate);
+        movie.favorite = true;
         return values;
     }
 

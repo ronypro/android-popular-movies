@@ -18,17 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/detail_movie_favorite_button"
-            android:text="Favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/detail_movie_unfavorite_button"
-            android:text="Unfavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/detail_movie_favorite_image_button"
+            tools:visibility="visible"
+            android:visibility="invisible"
+            android:src="@drawable/ic_favorite"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
 
         <TextView
             android:id="@+id/detail_movie_original_title_textview"

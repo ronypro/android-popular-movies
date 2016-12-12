@@ -23,6 +23,10 @@ public interface MovieModel extends Model {
 
     void save(Movie movie);
 
+    boolean needLoaderToList();
+
     void delete(Movie movie);
+
+    boolean needLoader(Movie movie);
 
 }

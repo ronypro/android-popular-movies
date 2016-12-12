@@ -30,13 +30,15 @@ public interface MovieDetailContract {
 
         void startPlayer(Uri playerUri);
 
+        void setMovieFavorite(boolean favorite);
+
+        void showFavoriteAction();
+
     }
 
     interface MovieDetailPresenter extends Presenter<MovieDetailView> {
 
         void onFavoriteMovieClick();
-
-        void onUnfavoriteMovieClick();
 
         void onVideoClick(Video video);
 

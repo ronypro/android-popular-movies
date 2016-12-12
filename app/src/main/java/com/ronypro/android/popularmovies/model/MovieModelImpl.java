@@ -35,9 +35,11 @@ import retrofit2.Call;
 
 public class MovieModelImpl extends AbstractModel implements MovieModel {
 
-    public static final String BASE_POSTER_URI = "http://image.tmdb.org/t/p/";
-    public static final String POSTER_THUMBNAIL_SIZE = "w154";
-    public static final String POSTER_SIZE = "w780";
+    private static final String BASE_POSTER_URI = "http://image.tmdb.org/t/p/";
+    private static final String POSTER_THUMBNAIL_SIZE = "w154";
+    private static final String POSTER_SIZE = "w780";
+
+    private static final String FAVORITE_LIST_TYPE = "favorite";
 
     private final MovieDatabaseApi movieDatabaseApi;
     private final ReviewModel reviewModel;
@@ -82,6 +84,17 @@ public class MovieModelImpl extends AbstractModel implements MovieModel {
                 .appendPath(size)
                 .appendEncodedPath(movie.posterPath)
                 .build();
+    }
+
+    @Override
+    public boolean needLoader(Movie movie) {
+        return movie.favorite;
+    }
+
+    @Override
+    public boolean needLoaderToList() {
+        String listType = getListType();
+        return FAVORITE_LIST_TYPE.equals(listType);
     }
 
     @Override

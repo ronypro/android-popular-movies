@@ -49,17 +49,19 @@ public class Movie implements Parcelable {
     @Expose(deserialize = false, serialize = false)
     public List<Review> reviewList;
 
+    @Expose(deserialize = false, serialize = false)
+    public boolean favorite;
+
     public Movie(Parcel in) {
         id = in.readLong();
         posterPath = in.readString();
         originalTitle = in.readString();
         overview = in.readString();
         voteAverage = in.readFloat();
-        long releaseDateMs = in.readLong();
-        if (releaseDateMs != Long.MIN_VALUE)
-            releaseDate = new Date(releaseDateMs);
+        releaseDate = ParcilUtil.readDate(in);
         videoList = ParcilUtil.readTypedListOrNUll(in, Video.CREATOR);
         reviewList = ParcilUtil.readTypedListOrNUll(in, Review.CREATOR);
+        favorite = ParcilUtil.readBool(in);
     }
 
     @Override
@@ -69,10 +71,10 @@ public class Movie implements Parcelable {
         parcel.writeString(originalTitle);
         parcel.writeString(overview);
         parcel.writeFloat(voteAverage);
-        long releaseDateMs = releaseDate != null? releaseDate.getTime() : Long.MIN_VALUE;
-        parcel.writeLong(releaseDateMs);
+        ParcilUtil.writeDate(parcel, releaseDate);
         parcel.writeTypedList(videoList);
         parcel.writeTypedList(reviewList);
+        ParcilUtil.writeBool(parcel, favorite);
     }
 
     @Override
