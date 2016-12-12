@@ -27,6 +27,9 @@ public interface MovieDetailContract {
         void showVideoList(List<Video> videoList);
 
         void showReviewList(List<Review> reviewList);
+
+        void startPlayer(Uri playerUri);
+
     }
 
     interface MovieDetailPresenter extends Presenter<MovieDetailView> {
@@ -34,6 +37,10 @@ public interface MovieDetailContract {
         void onFavoriteMovieClick();
 
         void onUnfavoriteMovieClick();
+
+        void onVideoClick(Video video);
+
+        Uri getThumbnailUri(Video video);
     }
 
 

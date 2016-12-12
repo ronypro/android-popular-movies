@@ -1,5 +1,7 @@
 package com.ronypro.android.popularmovies.contract.model;
 
+import android.net.Uri;
+
 import com.ronypro.android.mvp.model.Model;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.Review;
@@ -20,4 +22,8 @@ public interface VideoModel extends Model {
     void deleteByMovie(Movie movie);
 
     void save(Video video, Movie movie);
+
+    Uri getThumbnailUri(Video video);
+
+    Uri getPlayerUri(Video video);
 }

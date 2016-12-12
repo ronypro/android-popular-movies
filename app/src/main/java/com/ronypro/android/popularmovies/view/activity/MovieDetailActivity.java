@@ -1,6 +1,8 @@
 package com.ronypro.android.popularmovies.view.activity;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +16,7 @@ import com.ronypro.android.popularmovies.contract.MovieDetailContract;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.Review;
 import com.ronypro.android.popularmovies.entity.Video;
+import com.ronypro.android.popularmovies.view.adapter.VideoListAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -22,13 +25,16 @@ import java.util.List;
 
 public class MovieDetailActivity
         extends MvpAppCompatActivity<MovieDetailContract.MovieDetailPresenter>
-        implements MovieDetailContract.MovieDetailView, View.OnClickListener {
+        implements MovieDetailContract.MovieDetailView, View.OnClickListener, VideoListAdapter.Holder {
 
     private TextView originalTitleTextView;
     private RatingBar voteAverageRatingBar;
     private TextView releaseDateTextView;
     private TextView synopsisTextView;
     private ImageView posterImageView;
+    private RecyclerView videosRecyclerView;
+
+    private VideoListAdapter videoListAdapter;
 
     @Override
     protected int getLayoutToInflate() {
@@ -46,6 +52,10 @@ public class MovieDetailActivity
         releaseDateTextView = (TextView) findViewById(R.id.detail_movie_release_date_textview);
         synopsisTextView = (TextView) findViewById(R.id.detail_movie_synopsis_textview);
         posterImageView = (ImageView) findViewById(R.id.detail_movie_poster_imageview);
+        videosRecyclerView = (RecyclerView) findViewById(R.id.detail_movie_videos_list_recycler_view);
+
+        videoListAdapter = new VideoListAdapter(this);
+        videosRecyclerView.setAdapter(videoListAdapter);
 
         //TODO:
         findViewById(R.id.detail_movie_favorite_button).setOnClickListener(this);
@@ -84,12 +94,18 @@ public class MovieDetailActivity
 
     @Override
     public void showVideoList(List<Video> videoList) {
-        Toast.makeText(getBaseContext(), "VIDEO LIST SHOWED", Toast.LENGTH_SHORT).show();
+        videoListAdapter.setVideos(videoList);
     }
 
     @Override
     public void showReviewList(List<Review> reviewList) {
         Toast.makeText(getBaseContext(), "REVIEW LIST SHOWED", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void startPlayer(Uri playerUri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, playerUri);
+        startActivity(intent);
     }
 
     @Override
@@ -101,4 +117,15 @@ public class MovieDetailActivity
             getPresenter().onUnfavoriteMovieClick();
         }
     }
+
+    @Override
+    public Uri getThumbnailUri(Video video) {
+        return getPresenter().getThumbnailUri(video);
+    }
+
+    @Override
+    public void onVideoClick(Video video) {
+        getPresenter().onVideoClick(video);
+    }
+
 }

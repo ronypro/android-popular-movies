@@ -27,6 +27,12 @@ import retrofit2.Call;
 
 public class VideoModelImpl extends AbstractModel implements VideoModel {
 
+    private static final String SITE_YOUTUBE = "youtube";
+    private static final Uri THUMBNAIL_YOUTUBE_URI = Uri.parse("https://img.youtube.com/vi");
+    private static final String DEFAULT_THUMBNAIL_YOUTUBE_FILE = "0.jpg";
+    private static final Uri PLAYER_YOUTUBE_URI = Uri.parse("https://www.youtube.com/watch");
+    private static final String PLAYER_YOUTUBE_VIDEO_PARAMETER = "v";
+
     private MovieDatabaseApi movieDatabaseApi;
 
     public VideoModelImpl() {
@@ -55,4 +61,36 @@ public class VideoModelImpl extends AbstractModel implements VideoModel {
         video.id = UriUtil.getLongFromUri(videoUri);
     }
 
+    @Override
+    public Uri getThumbnailUri(Video video) {
+        if (isFromYouTube(video)) {
+            return getYouTubeThumbnailUri(video);
+        }
+        return null;
+    }
+
+    private Uri getYouTubeThumbnailUri(Video video) {
+        return THUMBNAIL_YOUTUBE_URI.buildUpon()
+                .appendPath(video.key)
+                .appendPath(DEFAULT_THUMBNAIL_YOUTUBE_FILE)
+                .build();
+    }
+
+    @Override
+    public Uri getPlayerUri(Video video) {
+        if (isFromYouTube(video)) {
+            return getYouTubePlayerUri(video);
+        }
+        return null;
+    }
+
+    private Uri getYouTubePlayerUri(Video video) {
+        return PLAYER_YOUTUBE_URI.buildUpon()
+                .appendQueryParameter(PLAYER_YOUTUBE_VIDEO_PARAMETER, video.key)
+                .build();
+    }
+
+    private boolean isFromYouTube(Video video) {
+        return SITE_YOUTUBE.equalsIgnoreCase(video.site);
+    }
 }

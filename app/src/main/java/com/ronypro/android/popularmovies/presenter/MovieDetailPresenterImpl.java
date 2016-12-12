@@ -9,6 +9,7 @@ import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.AbstractPresenter;
 import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.contract.MovieDetailContract;
+import com.ronypro.android.popularmovies.contract.model.VideoModel;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.Review;
 import com.ronypro.android.popularmovies.entity.Video;
@@ -33,6 +34,7 @@ public class MovieDetailPresenterImpl
 
     private Movie movie;
     private MovieModel movieModel = Mvp.getModel(MovieModel.class);
+    private VideoModel videoModel = Mvp.getModel(VideoModel.class);
 
     @Override
     public void onCreate(@NonNull Bundle extras, Bundle savedInstanceState) {
@@ -137,4 +139,20 @@ public class MovieDetailPresenterImpl
         //TODO: async?
         movieModel.delete(movie);
     }
+
+    @Override
+    public void onVideoClick(Video video) {
+        Uri playerUri = videoModel.getPlayerUri(video);
+        if (playerUri == null) {
+            getView().showToast(R.string.video_player_not_supported);
+        } else {
+            getView().startPlayer(playerUri);
+        }
+    }
+
+    @Override
+    public Uri getThumbnailUri(Video video) {
+        return videoModel.getThumbnailUri(video);
+    }
+
 }
