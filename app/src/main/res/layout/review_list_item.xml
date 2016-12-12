@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        app:layout_widthPercent="100%"
+        app:layout_aspectRatio="75%" >
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            tools:text="Review author"
+            android:id="@+id/review_author_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            tools:text="Review content"
+            android:id="@+id/review_content_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</android.support.percent.PercentFrameLayout>

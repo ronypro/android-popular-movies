@@ -88,6 +88,20 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:text="@string/detail_movie_reviews"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_marginTop="@dimen/movie_detail_info_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/detail_movie_reviews_list_recycler_view"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:text="@string/detail_movie_poster"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_marginTop="@dimen/movie_detail_info_margin"

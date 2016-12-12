@@ -16,6 +16,7 @@ import com.ronypro.android.popularmovies.contract.MovieDetailContract;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.Review;
 import com.ronypro.android.popularmovies.entity.Video;
+import com.ronypro.android.popularmovies.view.adapter.ReviewListAdapter;
 import com.ronypro.android.popularmovies.view.adapter.VideoListAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -32,9 +33,11 @@ public class MovieDetailActivity
     private TextView releaseDateTextView;
     private TextView synopsisTextView;
     private ImageView posterImageView;
-    private RecyclerView videosRecyclerView;
-
     private VideoListAdapter videoListAdapter;
+    private ReviewListAdapter reviewListAdapter;
+
+    private RecyclerView videosRecyclerView;
+    private RecyclerView reviewsRecyclerView;
 
     @Override
     protected int getLayoutToInflate() {
@@ -53,9 +56,13 @@ public class MovieDetailActivity
         synopsisTextView = (TextView) findViewById(R.id.detail_movie_synopsis_textview);
         posterImageView = (ImageView) findViewById(R.id.detail_movie_poster_imageview);
         videosRecyclerView = (RecyclerView) findViewById(R.id.detail_movie_videos_list_recycler_view);
+        reviewsRecyclerView = (RecyclerView) findViewById(R.id.detail_movie_reviews_list_recycler_view);
 
         videoListAdapter = new VideoListAdapter(this);
         videosRecyclerView.setAdapter(videoListAdapter);
+
+        reviewListAdapter = new ReviewListAdapter();
+        reviewsRecyclerView.setAdapter(reviewListAdapter);
 
         //TODO:
         findViewById(R.id.detail_movie_favorite_button).setOnClickListener(this);
@@ -94,12 +101,12 @@ public class MovieDetailActivity
 
     @Override
     public void showVideoList(List<Video> videoList) {
-        videoListAdapter.setVideos(videoList);
+        videoListAdapter.setEntities(videoList);
     }
 
     @Override
     public void showReviewList(List<Review> reviewList) {
-        Toast.makeText(getBaseContext(), "REVIEW LIST SHOWED", Toast.LENGTH_SHORT).show();
+        reviewListAdapter.setEntities(reviewList);
     }
 
     @Override

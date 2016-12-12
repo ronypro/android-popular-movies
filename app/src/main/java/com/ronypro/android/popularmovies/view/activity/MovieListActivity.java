@@ -57,7 +57,7 @@ public class MovieListActivity
 
     @Override
     public void showMovieList(List<Movie> movieList) {
-        movieListAdapter.setMovies(movieList);
+        movieListAdapter.setEntities(movieList);
     }
 
     @Override

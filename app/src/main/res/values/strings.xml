@@ -17,6 +17,7 @@
     <string name="detail_movie_synopsis">Synopsis</string>
     <string name="detail_movie_poster">Poster</string>
     <string name="detail_movie_videos">Videos</string>
+    <string name="detail_movie_reviews">Reviews</string>
 
     <!-- Strings related to Settings -->
     <string name="pref_movie_list_type_key">pref_movie_list_type</string>

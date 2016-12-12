@@ -21,19 +21,12 @@ import java.util.List;
  * Created by rahony on 10/10/16.
  */
 
-public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
+public class VideoListAdapter extends EntityListAdapter<Video, VideoListAdapter.ViewHolder> {
 
     private final Holder holder;
-    private List<Video> videos;
 
     public VideoListAdapter(@NonNull Holder holder) {
         this.holder = holder;
-        videos = new ArrayList<>();
-    }
-
-    public void setVideos(@NonNull List<Video> videos) {
-        this.videos = videos;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -45,7 +38,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        Video video = getVideo(position);
+        Video video = getEntity(position);
         viewHolder.name.setText(video.name);
         Uri thumbnailUri = holder.getThumbnailUri(video);
         loadPoster(viewHolder.thumbnail, thumbnailUri);
@@ -55,15 +48,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         Picasso.with(imageView.getContext())
                 .load(thumbnailUri)
                 .into(imageView);
-    }
-
-    @Override
-    public int getItemCount() {
-        return videos.size();
-    }
-
-    private Video getVideo(int position) {
-        return videos.get(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -81,7 +65,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            Video video = getVideo(position);
+            Video video = getEntity(position);
             holder.onVideoClick(video);
         }
     }

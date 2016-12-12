@@ -19,19 +19,12 @@ import java.util.List;
  * Created by rahony on 10/10/16.
  */
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
+public class MovieListAdapter extends EntityListAdapter<Movie, MovieListAdapter.ViewHolder> {
 
     private final Holder holder;
-    private List<Movie> movies;
 
     public MovieListAdapter(@NonNull Holder holder) {
         this.holder = holder;
-        movies = new ArrayList<>();
-    }
-
-    public void setMovies(@NonNull List<Movie> movies) {
-        this.movies = movies;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -43,7 +36,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        Movie movie = getMovie(position);
+        Movie movie = getEntity(position);
         Uri posterUri = holder.getPosterUri(movie);
         loadPoster(viewHolder.poster, posterUri);
     }
@@ -52,15 +45,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         Picasso.with(imageView.getContext())
                 .load(posterUri)
                 .into(imageView);
-    }
-
-    @Override
-    public int getItemCount() {
-        return movies.size();
-    }
-
-    private Movie getMovie(int position) {
-        return movies.get(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -76,7 +60,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            Movie movie = getMovie(position);
+            Movie movie = getEntity(position);
             holder.onMovieClick(movie);
         }
     }
