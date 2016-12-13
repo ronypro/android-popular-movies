@@ -90,6 +90,7 @@ public abstract class MvpSupportFragment<T extends Presenter> extends Fragment i
         Presenters presenters = mvp.getPresenters();
         T presenter = presenters.get(presenterClass);
         presenter.setContext(getContext());
+        presenter.setLoaderManager(getLoaderManager());
         setPresenter(presenter);
         presenter.setView(this);
     }

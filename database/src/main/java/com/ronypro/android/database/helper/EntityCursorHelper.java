@@ -11,8 +11,15 @@ public abstract class EntityCursorHelper<T> implements Iterable<T> {
 	private CursorHelper mCursorHelper;
 	private boolean markedToClose;
 
+	public EntityCursorHelper() {
+	}
+
 	public EntityCursorHelper(Cursor cursor) {
-		this.mCursorHelper = new CursorHelper(cursor, getColumns());
+		setCursor(cursor);
+	}
+
+	public void setCursor(Cursor cursor) {
+		this.mCursorHelper = new CursorHelper(cursor, getProjection());
 	}
 
 	public EntityCursorHelper<T> closeFinally() {
@@ -94,6 +101,10 @@ public abstract class EntityCursorHelper<T> implements Iterable<T> {
 	public void close() {
 		mCursorHelper.close();
 		mCursorHelper = null;
+	}
+
+	public String[] getProjection() {
+		return getColumns();
 	}
 
 	protected abstract String[] getColumns();

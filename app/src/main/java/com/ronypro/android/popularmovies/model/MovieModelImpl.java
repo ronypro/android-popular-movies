@@ -11,6 +11,7 @@ import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.model.AbstractModel;
 import com.ronypro.android.popularmovies.BuildConfig;
 import com.ronypro.android.popularmovies.R;
+import com.ronypro.android.popularmovies.contract.loader.MovieListLoader;
 import com.ronypro.android.popularmovies.contract.model.MovieModel;
 import com.ronypro.android.popularmovies.contract.model.ReviewModel;
 import com.ronypro.android.popularmovies.contract.model.VideoModel;
@@ -24,6 +25,7 @@ import com.ronypro.android.popularmovies.model.client.MovieDatabaseApiUtil;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 import com.ronypro.android.popularmovies.model.database.MovieValuesHelper;
 import com.ronypro.android.popularmovies.contract.database.MoviesContract;
+import com.ronypro.android.popularmovies.model.loader.MovieListLoaderImpl;
 
 import java.util.List;
 
@@ -89,6 +91,11 @@ public class MovieModelImpl extends AbstractModel implements MovieModel {
     @Override
     public boolean needLoader(Movie movie) {
         return movie.favorite;
+    }
+
+    @Override
+    public MovieListLoader getMovieListLoader(Context context, MovieListLoader.Callback movieListLoaderCallback) {
+        return new MovieListLoaderImpl(context, movieListLoaderCallback);
     }
 
     @Override

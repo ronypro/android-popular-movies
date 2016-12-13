@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.v4.app.LoaderManager;
 
 import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.model.Model;
@@ -17,6 +18,7 @@ public abstract class AbstractPresenter<T extends View> implements Presenter<T> 
 
     private Context applicationContext;
     private Context context;
+    private LoaderManager loaderManager;
     private T view;
 
     private boolean started;
@@ -37,6 +39,15 @@ public abstract class AbstractPresenter<T extends View> implements Presenter<T> 
     @Override
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    protected LoaderManager getLoaderManager() {
+        return loaderManager;
+    }
+
+    @Override
+    public void setLoaderManager(LoaderManager loaderManager) {
+        this.loaderManager = loaderManager;
     }
 
     @Override

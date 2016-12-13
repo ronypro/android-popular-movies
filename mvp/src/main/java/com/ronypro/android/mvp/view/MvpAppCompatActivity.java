@@ -84,6 +84,7 @@ public abstract class MvpAppCompatActivity<T extends Presenter> extends AppCompa
         Presenters presenters = mvp.getPresenters();
         T presenter = presenters.get(presenterClass);
         presenter.setContext(this);
+        presenter.setLoaderManager(getSupportLoaderManager());
         setPresenter(presenter);
         //noinspection unchecked
         presenter.setView(this);

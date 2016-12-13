@@ -77,10 +77,12 @@ public class MovieDetailPresenterImpl
     }
 
     private void loadVideoList() {
+        //TODO: se for favorito deve usar loader
         VideoListAsyncTask.executeParallel(movie, this);
     }
 
     private void loadReviewList() {
+        //TODO: se for favorito deve usar loader
         ReviewListAsyncTask.executeParallel(movie, this);
     }
 

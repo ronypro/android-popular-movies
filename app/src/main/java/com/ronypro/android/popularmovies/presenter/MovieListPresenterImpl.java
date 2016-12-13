@@ -10,6 +10,7 @@ import com.ronypro.android.mvp.presenter.AbstractPresenter;
 import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.contract.MovieDetailContract;
 import com.ronypro.android.popularmovies.contract.MovieListContract;
+import com.ronypro.android.popularmovies.contract.loader.MovieListLoader;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.contract.model.MovieModel;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
@@ -27,7 +28,9 @@ import static android.content.ContentValues.TAG;
  */
 public class MovieListPresenterImpl
         extends AbstractPresenter<MovieListContract.MovieListView>
-        implements MovieListContract.MovieListPresenter, MovieListAsyncTask.Callback {
+        implements MovieListContract.MovieListPresenter, MovieListAsyncTask.Callback, MovieListLoader.Callback {
+
+    private static final int MOVIE_LOADER = 1;
 
     private MovieModel movieModel = Mvp.getModel(MovieModel.class);
 
@@ -50,7 +53,12 @@ public class MovieListPresenterImpl
     }
 
     private void loadMovieList() {
-        MovieListAsyncTask.executeParallel(this);
+        if (movieModel.needLoaderToList()) {
+            MovieListLoader movieLoader = movieModel.getMovieListLoader(getContext(), this);
+            getLoaderManager().initLoader(MOVIE_LOADER, null, movieLoader);
+        } else {
+            MovieListAsyncTask.executeParallel(this);
+        }
     }
 
     @Override
@@ -85,5 +93,10 @@ public class MovieListPresenterImpl
     @Override
     public void onSettingsClick() {
         getView().startSettingsView();
+    }
+
+    @Override
+    public void onMovieListLoaded(List<Movie> movies) {
+        onMovieListResult(movies);
     }
 }
