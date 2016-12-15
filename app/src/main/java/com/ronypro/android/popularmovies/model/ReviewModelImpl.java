@@ -1,10 +1,12 @@
 package com.ronypro.android.popularmovies.model;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.net.Uri;
 
 import com.ronypro.android.mvp.model.AbstractModel;
 import com.ronypro.android.popularmovies.BuildConfig;
+import com.ronypro.android.popularmovies.contract.loader.ReviewListLoader;
 import com.ronypro.android.popularmovies.contract.model.ReviewModel;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.Review;
@@ -15,6 +17,7 @@ import com.ronypro.android.popularmovies.model.client.MovieDatabaseApiUtil;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 import com.ronypro.android.popularmovies.contract.database.MoviesContract;
 import com.ronypro.android.popularmovies.model.database.ReviewValuesHelper;
+import com.ronypro.android.popularmovies.model.loader.ReviewListLoaderImpl;
 import com.ronypro.android.popularmovies.util.UriUtil;
 
 import java.util.List;
@@ -55,4 +58,8 @@ public class ReviewModelImpl extends AbstractModel implements ReviewModel {
         review.id = UriUtil.getLongFromUri(reviewUri);
     }
 
+    @Override
+    public ReviewListLoader getReviewListLoader(Context context, Movie movie, ReviewListLoader.Callback reviewListLoaderCallback) {
+        return new ReviewListLoaderImpl(context, movie, reviewListLoaderCallback);
+    }
 }

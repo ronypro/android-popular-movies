@@ -7,7 +7,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
 import com.ronypro.android.database.helper.EntityCursorHelper;
-import com.ronypro.android.database.loader.EntityLoaderImpl;
+import com.ronypro.android.database.loader.BaseEntityLoader;
 import com.ronypro.android.popularmovies.contract.database.MoviesContract;
 import com.ronypro.android.popularmovies.contract.loader.MovieListLoader;
 import com.ronypro.android.popularmovies.entity.Movie;
@@ -18,7 +18,7 @@ import com.ronypro.android.popularmovies.model.database.MovieCursorHelper;
  */
 
 public class MovieListLoaderImpl
-        extends EntityLoaderImpl<Movie>
+        extends BaseEntityLoader<Movie>
         implements MovieListLoader {
 
     private final MovieListLoader.Callback callback;

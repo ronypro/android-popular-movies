@@ -13,20 +13,20 @@ import com.ronypro.android.database.helper.EntityCursorHelper;
  * Created by rahony on 12/12/16.
  */
 
-public abstract class EntityLoaderImpl<T>
+public abstract class BaseEntityLoader<T>
         extends CursorLoader
         implements EntityLoader<T> {
 
     private EntityCursorHelper<T> entityCursorHelper;
 
-    public EntityLoaderImpl(Context context, EntityCursorHelper entityCursorHelper) {
+    public BaseEntityLoader(Context context, EntityCursorHelper entityCursorHelper) {
         super(context);
         this.entityCursorHelper = entityCursorHelper;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        entityCursorHelper.setCursor(data); //TODO: otimiar para não usar o "calculo" de colunas!!
+        entityCursorHelper.setCursor(data); //TODO: otimizar para não usar o "calculo" de colunas!!
         onLoadFinished(loader, entityCursorHelper);
     }
 

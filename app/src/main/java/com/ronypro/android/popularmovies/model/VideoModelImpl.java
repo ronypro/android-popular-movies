@@ -1,10 +1,12 @@
 package com.ronypro.android.popularmovies.model;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.net.Uri;
 
 import com.ronypro.android.mvp.model.AbstractModel;
 import com.ronypro.android.popularmovies.BuildConfig;
+import com.ronypro.android.popularmovies.contract.loader.VideoListLoader;
 import com.ronypro.android.popularmovies.contract.model.VideoModel;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.Video;
@@ -15,6 +17,7 @@ import com.ronypro.android.popularmovies.model.client.MovieDatabaseApiUtil;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 import com.ronypro.android.popularmovies.contract.database.MoviesContract;
 import com.ronypro.android.popularmovies.model.database.VideoValuesHelper;
+import com.ronypro.android.popularmovies.model.loader.VideoListLoaderImpl;
 import com.ronypro.android.popularmovies.util.UriUtil;
 
 import java.util.List;
@@ -92,5 +95,10 @@ public class VideoModelImpl extends AbstractModel implements VideoModel {
 
     private boolean isFromYouTube(Video video) {
         return SITE_YOUTUBE.equalsIgnoreCase(video.site);
+    }
+
+    @Override
+    public VideoListLoader getVideoListLoader(Context context, Movie movie, VideoListLoader.Callback videoListLoaderCallback) {
+        return new VideoListLoaderImpl(context, movie, videoListLoaderCallback);
     }
 }

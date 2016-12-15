@@ -9,6 +9,9 @@ import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.AbstractPresenter;
 import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.contract.MovieDetailContract;
+import com.ronypro.android.popularmovies.contract.loader.ReviewListLoader;
+import com.ronypro.android.popularmovies.contract.loader.VideoListLoader;
+import com.ronypro.android.popularmovies.contract.model.ReviewModel;
 import com.ronypro.android.popularmovies.contract.model.VideoModel;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.Review;
@@ -26,15 +29,19 @@ import java.util.List;
  */
 public class MovieDetailPresenterImpl
         extends AbstractPresenter<MovieDetailContract.MovieDetailView>
-        implements MovieDetailContract.MovieDetailPresenter, VideoListAsyncTask.Callback, ReviewListAsyncTask.Callback {
+        implements MovieDetailContract.MovieDetailPresenter, VideoListAsyncTask.Callback, ReviewListAsyncTask.Callback, VideoListLoader.Callback, ReviewListLoader.Callback {
 
     private static final String TAG = MovieDetailPresenterImpl.class.getSimpleName();
 
     private static final String SAVED_STATE_MOVIE = "movie";
 
+    private static final int VIDEO_LOADER = 1;
+    private static final int REVIEW_LOADER = 2;
+
     private Movie movie;
     private MovieModel movieModel = Mvp.getModel(MovieModel.class);
     private VideoModel videoModel = Mvp.getModel(VideoModel.class);
+    private ReviewModel reviewModel = Mvp.getModel(ReviewModel.class);
 
     @Override
     public void onCreate(@NonNull Bundle extras, Bundle savedInstanceState) {
@@ -77,13 +84,21 @@ public class MovieDetailPresenterImpl
     }
 
     private void loadVideoList() {
-        //TODO: se for favorito deve usar loader
-        VideoListAsyncTask.executeParallel(movie, this);
+        if (movieModel.needLoader(movie)) {
+            VideoListLoader videoLoader = videoModel.getVideoListLoader(getContext(), movie, this);
+            getLoaderManager().initLoader(VIDEO_LOADER, null, videoLoader);
+        } else {
+            VideoListAsyncTask.executeParallel(movie, this);
+        }
     }
 
     private void loadReviewList() {
-        //TODO: se for favorito deve usar loader
-        ReviewListAsyncTask.executeParallel(movie, this);
+        if (movieModel.needLoader(movie)) {
+            ReviewListLoader reviewLoader = reviewModel.getReviewListLoader(getContext(), movie, this);
+            getLoaderManager().initLoader(REVIEW_LOADER, null, reviewLoader);
+        } else {
+            ReviewListAsyncTask.executeParallel(movie, this);
+        }
     }
 
     @Override
@@ -174,6 +189,16 @@ public class MovieDetailPresenterImpl
         if (movie.reviewList != null && movie.videoList != null) {
             getView().showFavoriteAction();
         }
+    }
+
+    @Override
+    public void onVideoListLoaded(List<Video> videos) {
+        onVideoListResult(videos);
+    }
+
+    @Override
+    public void onReviewListLoaded(List<Review> reviews) {
+        onReviewListResult(reviews);
     }
 
 }
