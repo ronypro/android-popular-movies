@@ -12,7 +12,6 @@ import com.ronypro.android.popularmovies.entity.Video;
 
 public class VideoCursorHelper extends EntityCursorHelper<Video> {
 
-    //TODO: Otimizar o EntityCursorHelper !!
     private static final String[] PROJECTION = new String[] {
             MoviesContract.VideoEntry._ID,
             MoviesContract.VideoEntry.COLUMN_API_ID,
@@ -24,11 +23,6 @@ public class VideoCursorHelper extends EntityCursorHelper<Video> {
     @Override
     public String[] getProjection() {
         return PROJECTION;
-    }
-
-    @Override
-    protected String[] getColumns() {
-        return null;
     }
 
     @Override

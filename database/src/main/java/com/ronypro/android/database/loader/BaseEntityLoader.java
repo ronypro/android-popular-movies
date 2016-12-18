@@ -26,7 +26,7 @@ public abstract class BaseEntityLoader<T>
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        entityCursorHelper.setCursor(data); //TODO: otimizar para não usar o "calculo" de colunas!!
+        entityCursorHelper.setCursor(data);
         onLoadFinished(loader, entityCursorHelper);
     }
 

@@ -5,23 +5,13 @@ import android.os.Bundle;
 
 import java.util.Date;
 
-public class CursorHelper {
+public abstract class CursorHelper {
 
 	private final Cursor cursor;
 
-	private int[] columnsIndexes;
-	private int columnIndex;
-
-	public CursorHelper(Cursor cursor, String[] columns) {
+	public CursorHelper(Cursor cursor) {
 		super();
 		this.cursor = cursor;
-		if (columns != null) {
-			setColumnIndexesFromNames(columns);
-		}
-	}
-
-	public CursorHelper(Cursor cursor) {
-		this(cursor, null);
 	}
 
 	public void close() {
@@ -229,14 +219,6 @@ public class CursorHelper {
 		return this.cursor.getInt(columnIndex) == 1;
 	}
 
-	public int getType(int columnIndex) {
-		return this.cursor.getType(columnIndex);
-	}
-
-	public boolean getWantsAllOnMoveCalls() {
-		return this.cursor.getWantsAllOnMoveCalls();
-	}
-
 	public boolean isAfterLast() {
 		return this.cursor.isAfterLast();
 	}
@@ -262,86 +244,37 @@ public class CursorHelper {
 	}
 
 	public boolean move(int offset) {
-		this.columnIndex = 0;
 		return this.cursor.move(offset);
 	}
 
 	public boolean moveToFirst() {
-		this.columnIndex = 0;
 		return this.cursor.moveToFirst();
 	}
 
 	public boolean moveToLast() {
-		this.columnIndex = 0;
 		return this.cursor.moveToLast();
 	}
 
 	public boolean moveToNext() {
-		this.columnIndex = 0;
 		return this.cursor.moveToNext();
 	}
 
 	public boolean moveToPosition(int position) {
-		this.columnIndex = 0;
 		return this.cursor.moveToPosition(position);
 	}
 
 	public boolean moveToPrevious() {
-		this.columnIndex = 0;
 		return this.cursor.moveToPrevious();
-	}
-
-	private int getColumnIndex() {
-		int i = this.columnIndex++;
-		if (this.columnsIndexes == null)
-			return i;
-		if (i < this.columnsIndexes.length)
-			return this.columnsIndexes[i];
-		return -1;
-	}
-
-	private int[] getColumnIndexes(String[] columns) {
-		int[] indexes = new int[columns.length];
-		int i = 0;
-		int space;
-		int point;
-		for (String column : columns) {
-			space = column.lastIndexOf(' ');
-			if (space > -1) {
-				column = column.substring(space + 1);
-			} else {
-				point = column.indexOf('.');
-				if (point > -1) {
-					column = column.substring(point + 1);
-				}
-			}
-			indexes[i++] = this.cursor != null? this.cursor.getColumnIndex(column) : -1;
-		}
-		return indexes;
-	}
-
-	public void setColumnIndexesFromNames(String[] columns) {
-		setColumnIndexes(getColumnIndexes(columns));
-	}
-
-	private void setColumnIndexes(int[] columnsIndexes) {
-		this.columnsIndexes = columnsIndexes;
-	}
-
-	public void gotoFirstColumn() {
-		this.columnIndex = 0;
-	}
-
-	public void skipColumn() {
-		skipColumns(1);
-	}
-
-	public void skipColumns(int columns) {
-		this.columnIndex += columns;
 	}
 
 	public int getPosition() {
 		return this.cursor.getPosition();
+	}
+
+	protected abstract int getColumnIndex();
+
+	public int getColumnIndex(String column) {
+		return cursor.getColumnIndex(column);
 	}
 
 }

@@ -34,7 +34,7 @@ public class VideoListLoaderImpl
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getContext(), MoviesContract.VideoEntry.buildVideoByMovieUri(movie.id), null, null, null, null);
+        return new CursorLoader(getContext(), MoviesContract.VideoEntry.buildVideoByMovieUri(movie.id), getProjectionFromHelper(), null, null, null);
     }
 
     @Override

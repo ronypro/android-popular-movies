@@ -19,7 +19,7 @@ public abstract class EntityCursorHelper<T> implements Iterable<T> {
 	}
 
 	public void setCursor(Cursor cursor) {
-		this.mCursorHelper = new CursorHelper(cursor, getProjection());
+		this.mCursorHelper = new ProjectionCursorHelper(cursor);
 	}
 
 	public EntityCursorHelper<T> closeFinally() {
@@ -103,11 +103,7 @@ public abstract class EntityCursorHelper<T> implements Iterable<T> {
 		mCursorHelper = null;
 	}
 
-	public String[] getProjection() {
-		return getColumns();
-	}
-
-	protected abstract String[] getColumns();
+	public abstract String[] getProjection();
 
 	protected abstract T parseToModel(CursorHelper cursorHelper);
 

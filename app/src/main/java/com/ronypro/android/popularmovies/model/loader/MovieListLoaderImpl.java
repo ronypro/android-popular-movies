@@ -30,7 +30,7 @@ public class MovieListLoaderImpl
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getContext(), MoviesContract.MovieEntry.CONTENT_URI, null, null, null, null);
+        return new CursorLoader(getContext(), MoviesContract.MovieEntry.CONTENT_URI, getProjectionFromHelper(), null, null, null);
     }
 
     @Override

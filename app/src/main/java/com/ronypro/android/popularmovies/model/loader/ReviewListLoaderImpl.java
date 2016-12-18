@@ -36,7 +36,7 @@ public class ReviewListLoaderImpl
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getContext(), MoviesContract.ReviewEntry.buildReviewByMovieUri(movie.id), null, null, null, null);
+        return new CursorLoader(getContext(), MoviesContract.ReviewEntry.buildReviewByMovieUri(movie.id), getProjectionFromHelper(), null, null, null);
     }
 
     @Override

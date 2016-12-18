@@ -11,7 +11,6 @@ import com.ronypro.android.popularmovies.entity.Movie;
 
 public class MovieCursorHelper extends EntityCursorHelper<Movie> {
 
-    //TODO: Otimizar o EntityCursorHelper !!
     private static final String[] PROJECTION = new String[] {
             MoviesContract.MovieEntry._ID,
             MoviesContract.MovieEntry.COLUMN_POSTER_PATH,
@@ -24,11 +23,6 @@ public class MovieCursorHelper extends EntityCursorHelper<Movie> {
     @Override
     public String[] getProjection() {
         return PROJECTION;
-    }
-
-    @Override
-    protected String[] getColumns() {
-        return null;
     }
 
     @Override
