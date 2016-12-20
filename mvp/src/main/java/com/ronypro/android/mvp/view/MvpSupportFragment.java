@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ronypro.android.mvp.Mvp;
 import com.ronypro.android.mvp.presenter.Presenter;
@@ -133,4 +134,8 @@ public abstract class MvpSupportFragment<T extends Presenter> extends Fragment i
         presenter.onCreate(extras, savedInstanceState);
     }
 
+    @Override
+    public void showToast(int message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
 }

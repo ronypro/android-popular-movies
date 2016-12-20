@@ -7,9 +7,10 @@
     android:layout_height="match_parent"
     tools:context="com.ronypro.android.popularmovies.view.activity.MovieListActivity">
 
-    <fragment
-        android:id="@+id/movie_list_fragment"
-        android:name="com.ronypro.android.popularmovies.view.fragment.MovieListFragment"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movies_recycler_view"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="@integer/movie_list_columns"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
