@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.ronypro.android.popularmovies.view.activity.MovieListActivity">
 
+    <fragment
+        android:id="@+id/movie_list_fragment"
+        android:name="com.ronypro.android.popularmovies.view.fragment.MovieListFragment"
+        android:layout_width="200dp"
+        android:layout_height="match_parent" />
+
     <FrameLayout
         android:id="@+id/movie_detail_fragment_container"
         android:layout_width="match_parent"

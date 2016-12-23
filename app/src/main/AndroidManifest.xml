@@ -28,8 +28,7 @@
         <activity
             android:name=".view.activity.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"
-            android:parentActivityName=".view.activity.MovieListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".view.activity.MovieListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ronypro.android.popularmovies.view.activity.MovieListActivity" />

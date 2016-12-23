@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.ronypro.android.mvp.view.MvpAppCompatActivity;
 import com.ronypro.android.mvp.view.MvpSupportFragment;
 import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.contract.MovieListContract;
@@ -67,6 +66,21 @@ public class MovieListFragment
 
     @Override
     public void startDetailView(Bundle extras) {
+        if (getHolder().isTwoPane()) {
+            replaceDetailFragment(extras);
+        } else {
+            startDetailActivity(extras);
+        }
+    }
+
+    private void replaceDetailFragment(Bundle extras) {
+        MovieDetailFragment.replaceInContainer(
+                getFragmentManager(),
+                R.id.movie_detail_fragment_container,
+                extras);
+    }
+
+    private void startDetailActivity(Bundle extras) {
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
         intent.putExtras(extras);
         startActivity(intent);
@@ -86,6 +100,16 @@ public class MovieListFragment
     @Override
     public void onMovieClick(Movie movie) {
         getPresenter().onMovieClick(movie);
+    }
+
+    private Holder getHolder() {
+        return (Holder) getActivity();
+    }
+
+    public interface Holder {
+
+        boolean isTwoPane();
+
     }
 
 }

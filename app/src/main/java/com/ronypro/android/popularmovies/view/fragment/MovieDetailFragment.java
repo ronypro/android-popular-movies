@@ -2,6 +2,8 @@ package com.ronypro.android.popularmovies.view.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,7 +29,9 @@ import java.util.List;
 
 public class MovieDetailFragment
         extends MvpSupportFragment<MovieDetailContract.MovieDetailPresenter>
-        implements MovieDetailContract.MovieDetailView, View.OnClickListener, VideoListAdapter.Holder {
+        implements MovieDetailContract.MovieDetailView,
+                   View.OnClickListener,
+                   VideoListAdapter.Holder {
 
     private TextView originalTitleTextView;
     private RatingBar voteAverageRatingBar;
@@ -137,6 +141,15 @@ public class MovieDetailFragment
     @Override
     public void onVideoClick(Video video) {
         getPresenter().onVideoClick(video);
+    }
+
+    public static void replaceInContainer(FragmentManager fragmentManager, int containerId, Bundle args) {
+        MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+        movieDetailFragment.setArguments(args);
+        fragmentManager
+                .beginTransaction()
+                .replace(containerId, movieDetailFragment)
+                .commit();
     }
 
 }

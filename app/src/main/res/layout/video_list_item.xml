@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:background="?android:attr/selectableItemBackground"
+    <ImageView
+        android:id="@+id/video_thumbnail_image_view"
+        android:scaleType="centerCrop"
+        tools:src="@android:drawable/presence_video_online"
         app:layout_widthPercent="100%"
-        app:layout_aspectRatio="75%" >
+        app:layout_aspectRatio="130%" />
 
-        <ImageView
-            android:id="@+id/video_thumbnail_image_view"
-            android:scaleType="fitXY"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <TextView
+        style="@style/TextAppearance.AppCompat.Medium"
+        tools:text="Video name"
+        android:layout_below="@id/video_thumbnail_image_view"
+        android:id="@+id/video_name_text_view"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Medium"
-            tools:text="Video name"
-            android:id="@+id/video_name_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </FrameLayout>
-
-</android.support.percent.PercentFrameLayout>
+</android.support.percent.PercentRelativeLayout>
