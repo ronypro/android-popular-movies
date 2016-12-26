@@ -26,6 +26,8 @@
     <string name="detail_movie_release_date_undefined">Undefined</string>
     <string name="detail_movie_synopsis_undefined">Undefined</string>
     <string name="video_player_not_supported">Video player not supported</string>
+    <string name="review_content">Review</string>
+    <string name="review_author">Author</string>
     <string-array name="pref_movie_list_type_titles">
         <item>Popular</item>
         <item>Top rated</item>
