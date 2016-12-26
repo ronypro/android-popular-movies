@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.ronypro.android.mvp.model.Model;
 import com.ronypro.android.popularmovies.contract.loader.MovieListLoader;
 import com.ronypro.android.popularmovies.entity.Movie;
+import com.ronypro.android.popularmovies.entity.MovieListType;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 import com.ronypro.android.popularmovies.presenter.MovieListPresenterImpl;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public interface MovieModel extends Model {
 
-    List<Movie> getMovieList() throws HttpCallException, NetworkCallException;
+    List<Movie> getMovieList(@MovieListType int movieListType) throws HttpCallException, NetworkCallException;
 
     Uri getPosterThumbnailUri(Movie movie);
 
@@ -26,7 +27,7 @@ public interface MovieModel extends Model {
 
     void save(Movie movie);
 
-    boolean needLoaderToList();
+    boolean needLoaderToList(@MovieListType int movieListType);
 
     void delete(Movie movie);
 

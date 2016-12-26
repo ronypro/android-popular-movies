@@ -12,8 +12,8 @@ import com.ronypro.android.mvp.view.MvpSupportFragment;
 import com.ronypro.android.popularmovies.R;
 import com.ronypro.android.popularmovies.contract.MovieListContract;
 import com.ronypro.android.popularmovies.entity.Movie;
+import com.ronypro.android.popularmovies.entity.MovieListType;
 import com.ronypro.android.popularmovies.view.activity.MovieDetailActivity;
-import com.ronypro.android.popularmovies.view.activity.SettingsActivity;
 import com.ronypro.android.popularmovies.view.adapter.MovieListAdapter;
 
 import java.util.List;
@@ -37,21 +37,6 @@ public class MovieListFragment
         moviesRecyclerView.setHasFixedSize(true);
         moviesRecyclerView.setAdapter(movieListAdapter);
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.movie_list, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                getPresenter().onSettingsClick();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -87,12 +72,6 @@ public class MovieListFragment
     }
 
     @Override
-    public void startSettingsView() {
-        Intent intent = new Intent(getActivity(), SettingsActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public boolean canShowMovieDetail() {
         Holder holder = getHolder();
         return holder != null && holder.isTwoPane();
@@ -110,6 +89,10 @@ public class MovieListFragment
 
     private Holder getHolder() {
         return (Holder) getActivity();
+    }
+
+    public void onListSelected(@MovieListType int movieListType) {
+        getPresenter().onListSelected(movieListType);
     }
 
     public interface Holder {

@@ -17,6 +17,7 @@ import com.ronypro.android.popularmovies.contract.model.ReviewModel;
 import com.ronypro.android.popularmovies.contract.model.VideoModel;
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.entity.MovieList;
+import com.ronypro.android.popularmovies.entity.MovieListType;
 import com.ronypro.android.popularmovies.entity.Review;
 import com.ronypro.android.popularmovies.entity.Video;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
@@ -41,7 +42,8 @@ public class MovieModelImpl extends AbstractModel implements MovieModel {
     private static final String POSTER_THUMBNAIL_SIZE = "w154";
     private static final String POSTER_SIZE = "w780";
 
-    private static final String FAVORITE_LIST_TYPE = "favorite";
+    private static final String POPULAR_LIST_TYPE = "popular";
+    private static final String TOP_RATED_LIST_TYPE = "top_rated";
 
     private final MovieDatabaseApi movieDatabaseApi;
     private final ReviewModel reviewModel;
@@ -54,20 +56,13 @@ public class MovieModelImpl extends AbstractModel implements MovieModel {
     }
 
     @Override
-    public List<Movie> getMovieList() throws HttpCallException, NetworkCallException {
+    public List<Movie> getMovieList(@MovieListType int movieListType) throws HttpCallException, NetworkCallException {
         String apiKey = BuildConfig.THE_MOVIE_DB_API_KEY;
-        String type = getListType();
+
+        String type = getTypeToApi(movieListType);
         Call<MovieList> movieListCall = movieDatabaseApi.getMovieList(type, apiKey);
         MovieList movieList = MovieDatabaseApiUtil.resolveCall(movieListCall);
         return movieList.results;
-    }
-
-    private String getListType() {
-        Context context = getApplicationContext();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String listTypeKey = context.getString(R.string.pref_movie_list_type_key);
-        String listTypeDefault = context.getString(R.string.pref_movie_list_type_value);
-        return sharedPreferences.getString(listTypeKey, listTypeDefault);
     }
 
     @Override
@@ -99,9 +94,8 @@ public class MovieModelImpl extends AbstractModel implements MovieModel {
     }
 
     @Override
-    public boolean needLoaderToList() {
-        String listType = getListType();
-        return FAVORITE_LIST_TYPE.equals(listType);
+    public boolean needLoaderToList(@MovieListType int movieListType) {
+        return movieListType == MovieListType.FAVORITE;
     }
 
     @Override
@@ -159,6 +153,16 @@ public class MovieModelImpl extends AbstractModel implements MovieModel {
         for (Video video : movie.videoList) {
             videoModel.save(video, movie);
         }
+    }
+
+    private String getTypeToApi(@MovieListType int movieListType) {
+        switch (movieListType) {
+            case MovieListType.POPULAR:
+                return POPULAR_LIST_TYPE;
+            case MovieListType.TOP_RATED:
+                return TOP_RATED_LIST_TYPE;
+        }
+        return null;
     }
 
 }

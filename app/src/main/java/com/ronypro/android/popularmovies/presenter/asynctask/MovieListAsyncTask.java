@@ -5,6 +5,7 @@ import android.support.v4.os.AsyncTaskCompat;
 
 import com.ronypro.android.popularmovies.entity.Movie;
 import com.ronypro.android.popularmovies.contract.model.MovieModel;
+import com.ronypro.android.popularmovies.entity.MovieListType;
 import com.ronypro.android.popularmovies.model.client.HttpCallException;
 import com.ronypro.android.popularmovies.model.client.NetworkCallException;
 
@@ -16,7 +17,7 @@ import static com.ronypro.android.mvp.Mvp.getModel;
  * Created by rahony on 08/10/16.
  */
 
-public class MovieListAsyncTask extends AsyncTask<Void, Void, MovieListAsyncTask.Result> {
+public class MovieListAsyncTask extends AsyncTask<Integer, Void, MovieListAsyncTask.Result> {
 
     private Callback callback;
 
@@ -25,10 +26,12 @@ public class MovieListAsyncTask extends AsyncTask<Void, Void, MovieListAsyncTask
     }
 
     @Override
-    protected Result doInBackground(Void... voids) {
+    protected Result doInBackground(Integer... args) {
         Result result = new Result();
         try {
-            result.movieList = getModel(MovieModel.class).getMovieList();
+            @MovieListType
+            int movieListType = args[0];
+            result.movieList = getModel(MovieModel.class).getMovieList(movieListType);
         } catch (HttpCallException e) {
             result.httpCallException = e;
         } catch (NetworkCallException e) {
@@ -48,9 +51,9 @@ public class MovieListAsyncTask extends AsyncTask<Void, Void, MovieListAsyncTask
         }
     }
 
-    public static void executeParallel(Callback callback) {
+    public static void executeParallel(@MovieListType int movieListType, Callback callback) {
         MovieListAsyncTask movieListAsyncTask = new MovieListAsyncTask(callback);
-        AsyncTaskCompat.executeParallel(movieListAsyncTask);
+        AsyncTaskCompat.executeParallel(movieListAsyncTask, movieListType);
     }
 
     static class Result {

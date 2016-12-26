@@ -19,25 +19,15 @@
     <string name="detail_movie_videos">Videos</string>
     <string name="detail_movie_reviews">Reviews</string>
 
-    <!-- Strings related to Settings -->
-    <string name="pref_movie_list_type_key">pref_movie_list_type</string>
-    <string name="pref_movie_list_type_value">popular</string>
-    <string name="pref_movie_list_type_message">Sort order</string>
     <string name="detail_movie_release_date_undefined">Undefined</string>
     <string name="detail_movie_synopsis_undefined">Undefined</string>
     <string name="video_player_not_supported">Video player not supported</string>
     <string name="review_content">Review</string>
     <string name="review_author">Author</string>
-    <string-array name="pref_movie_list_type_titles">
-        <item>Popular</item>
-        <item>Top rated</item>
-        <item>Favorite</item>
-    </string-array>
-    <string-array name="pref_movie_list_type_values">
-        <item>popular</item>
-        <item>top_rated</item>
-        <item>favorite</item>
-    </string-array>
-
+    <string name="movies_popular">Popular</string>
+    <string name="movies_top_rated">Top rated</string>
+    <string name="movies_favorite">Favorite</string>
+    <string name="drawer_open">Navigation open</string>
+    <string name="drawer_close">Navigation close</string>
 
 </resources>

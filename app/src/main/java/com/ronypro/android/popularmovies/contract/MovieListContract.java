@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.ronypro.android.mvp.presenter.Presenter;
 import com.ronypro.android.mvp.view.View;
 import com.ronypro.android.popularmovies.entity.Movie;
+import com.ronypro.android.popularmovies.entity.MovieListType;
 
 import java.util.List;
 
@@ -21,8 +22,6 @@ public interface MovieListContract {
 
         void startDetailView(Bundle extras);
 
-        void startSettingsView();
-
         boolean canShowMovieDetail();
     }
 
@@ -32,7 +31,7 @@ public interface MovieListContract {
 
         Uri getPosterUri(Movie movie);
 
-        void onSettingsClick();
+        void onListSelected(@MovieListType int movieListType);
     }
 
 }
