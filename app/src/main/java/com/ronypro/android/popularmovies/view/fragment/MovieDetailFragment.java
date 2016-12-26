@@ -33,6 +33,8 @@ public class MovieDetailFragment
                    View.OnClickListener,
                    VideoListAdapter.Holder {
 
+    private static final String TAG = MovieDetailFragment.class.getName();
+
     private TextView originalTitleTextView;
     private RatingBar voteAverageRatingBar;
     private TextView releaseDateTextView;
@@ -148,8 +150,18 @@ public class MovieDetailFragment
         movieDetailFragment.setArguments(args);
         fragmentManager
                 .beginTransaction()
-                .replace(containerId, movieDetailFragment)
+                .replace(containerId, movieDetailFragment, TAG)
                 .commit();
+    }
+
+    public static void removeFromContainer(FragmentManager fragmentManager) {
+        MovieDetailFragment movieDetailFragment = (MovieDetailFragment) fragmentManager.findFragmentByTag(TAG);
+        if (movieDetailFragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .remove(movieDetailFragment)
+                    .commit();
+        }
     }
 
 }

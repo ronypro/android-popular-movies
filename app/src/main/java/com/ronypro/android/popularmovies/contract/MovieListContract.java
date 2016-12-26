@@ -20,9 +20,11 @@ public interface MovieListContract {
 
         void showMovieList(List<Movie> movieList);
 
-        void startDetailView(Bundle extras);
+        void startDetailView(Bundle extras, boolean post);
 
         boolean canShowMovieDetail();
+
+        void clearMovieDetail(boolean post);
     }
 
     interface MovieListPresenter extends Presenter<MovieListView> {

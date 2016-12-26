@@ -40,11 +40,13 @@ public class MovieListPresenterImpl
     private MovieModel movieModel = Mvp.getModel(MovieModel.class);
     @MovieListType
     private int movieListType = MovieListType.POPULAR;
+    private boolean needShowFirstMovie;
 
     @Override
     public void onCreate(@NonNull Bundle extras, Bundle savedInstanceState) {
         super.onCreate(extras, savedInstanceState);
         SQLiteStudioService.instance().start(getContext());
+        needShowFirstMovie = savedInstanceState == null && getView().canShowMovieDetail();
     }
 
     @Override
@@ -85,12 +87,19 @@ public class MovieListPresenterImpl
 
     @Override
     public void onMovieListResult(List<Movie> movieList) {
+        onMovieListResult(movieList, false);
+    }
+
+    public void onMovieListResult(List<Movie> movieList, boolean fromLoader) {
         MovieListContract.MovieListView view = getView();
         view.showMovieList(movieList);
-        //FIXME: nao carregar o primeiro quando já tiver um restaurado!!
-        if (!movieList.isEmpty() && view.canShowMovieDetail()) {
-            Movie movie = movieList.get(FIRST_MOVIE_INDEX);
-            showMovieDetail(movie);
+        if (needShowFirstMovie) {
+            if (!movieList.isEmpty()) {
+                Movie movie = movieList.get(FIRST_MOVIE_INDEX);
+                showMovieDetail(movie, fromLoader);
+            } else {
+                clearMovieDetail(fromLoader);
+            }
         }
     }
 
@@ -113,18 +122,22 @@ public class MovieListPresenterImpl
 
     @Override
     public void onMovieClick(Movie movie) {
-        showMovieDetail(movie);
+        showMovieDetail(movie, false);
     }
 
     @Override
     public void onMovieListLoaded(List<Movie> movies) {
-        onMovieListResult(movies);
+        onMovieListResult(movies, true);
     }
 
-    private void showMovieDetail(Movie movie) {
+    private void showMovieDetail(Movie movie, boolean fromLoader) {
         Bundle extras = new Bundle();
         extras.putParcelable(MovieDetailContract.MovieDetailView.EXTRA_MOVIE, movie);
-        getView().startDetailView(extras);
+        getView().startDetailView(extras, fromLoader);
+    }
+
+    private void clearMovieDetail(boolean fromLoader) {
+        getView().clearMovieDetail(fromLoader);
     }
 
     @Override
@@ -132,6 +145,7 @@ public class MovieListPresenterImpl
         boolean listChanged = this.movieListType != movieListType;
         this.movieListType = movieListType;
         if (listChanged) {
+            needShowFirstMovie = getView().canShowMovieDetail();
             loadMovieList();
         }
     }

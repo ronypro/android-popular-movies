@@ -50,11 +50,24 @@ public class MovieListFragment
     }
 
     @Override
-    public void startDetailView(Bundle extras) {
+    public void startDetailView(Bundle extras, boolean post) {
         if (getHolder().isTwoPane()) {
-            replaceDetailFragment(extras);
+            replaceDetailFragment(extras, post);
         } else {
             startDetailActivity(extras);
+        }
+    }
+
+    private void replaceDetailFragment(final Bundle extras, boolean post) {
+        if (post) {
+            getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    replaceDetailFragment(extras);
+                }
+            });
+        } else {
+            replaceDetailFragment(extras);
         }
     }
 
@@ -75,6 +88,24 @@ public class MovieListFragment
     public boolean canShowMovieDetail() {
         Holder holder = getHolder();
         return holder != null && holder.isTwoPane();
+    }
+
+    @Override
+    public void clearMovieDetail(boolean post) {
+        if (post) {
+            getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    clearMovieDetail();
+                }
+            });
+        } else {
+            clearMovieDetail();
+        }
+    }
+
+    private void clearMovieDetail() {
+        MovieDetailFragment.removeFromContainer(getFragmentManager());
     }
 
     @Override
