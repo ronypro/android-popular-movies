@@ -158,14 +158,12 @@ public class MovieDetailPresenterImpl
 
     private void favoriteMoview(Movie movie) {
         movie.favorite = true;
-        //TODO: async?
         movieModel.save(movie);
         getView().setMovieFavorite(movie.favorite);
     }
 
     private void unfavoriteMoview(Movie movie) {
         movie.favorite = false;
-        //TODO: async?
         movieModel.delete(movie);
         getView().setMovieFavorite(movie.favorite);
     }
