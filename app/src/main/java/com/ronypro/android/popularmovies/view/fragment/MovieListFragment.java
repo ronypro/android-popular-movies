@@ -93,6 +93,12 @@ public class MovieListFragment
     }
 
     @Override
+    public boolean canShowMovieDetail() {
+        Holder holder = getHolder();
+        return holder != null && holder.isTwoPane();
+    }
+
+    @Override
     public Uri getPosterUri(Movie movie) {
         return getPresenter().getPosterUri(movie);
     }

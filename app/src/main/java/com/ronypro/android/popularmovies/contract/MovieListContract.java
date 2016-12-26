@@ -23,6 +23,7 @@ public interface MovieListContract {
 
         void startSettingsView();
 
+        boolean canShowMovieDetail();
     }
 
     interface MovieListPresenter extends Presenter<MovieListView> {

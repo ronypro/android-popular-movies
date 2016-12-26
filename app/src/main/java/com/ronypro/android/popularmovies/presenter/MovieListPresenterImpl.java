@@ -31,6 +31,7 @@ public class MovieListPresenterImpl
         implements MovieListContract.MovieListPresenter, MovieListAsyncTask.Callback, MovieListLoader.Callback {
 
     private static final int MOVIE_LOADER = 1;
+    private static final int FIRST_MOVIE_INDEX = 0;
 
     private MovieModel movieModel = Mvp.getModel(MovieModel.class);
 
@@ -63,7 +64,13 @@ public class MovieListPresenterImpl
 
     @Override
     public void onMovieListResult(List<Movie> movieList) {
-        getView().showMovieList(movieList);
+        MovieListContract.MovieListView view = getView();
+        view.showMovieList(movieList);
+        //FIXME: nao carregar o primeiro quando já tiver um restaurado!!
+        if (!movieList.isEmpty() && view.canShowMovieDetail()) {
+            Movie movie = movieList.get(FIRST_MOVIE_INDEX);
+            showMovieDetail(movie);
+        }
     }
 
     @Override
@@ -85,9 +92,7 @@ public class MovieListPresenterImpl
 
     @Override
     public void onMovieClick(Movie movie) {
-        Bundle extras = new Bundle();
-        extras.putParcelable(MovieDetailContract.MovieDetailView.EXTRA_MOVIE, movie);
-        getView().startDetailView(extras);
+        showMovieDetail(movie);
     }
 
     @Override
@@ -99,4 +104,11 @@ public class MovieListPresenterImpl
     public void onMovieListLoaded(List<Movie> movies) {
         onMovieListResult(movies);
     }
+
+    private void showMovieDetail(Movie movie) {
+        Bundle extras = new Bundle();
+        extras.putParcelable(MovieDetailContract.MovieDetailView.EXTRA_MOVIE, movie);
+        getView().startDetailView(extras);
+    }
+
 }
